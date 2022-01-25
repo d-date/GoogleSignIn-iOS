@@ -24,7 +24,6 @@ public struct GIDSwiftUISignInButton: View {
   private let title = "Sign In with Google"
   private let googleImageName = "google"
   private let action: () -> Void
-  private let icon: UIImageView
 
   // MARK: - Button attribute wrappers
 
@@ -76,7 +75,6 @@ public struct GIDSwiftUISignInButton: View {
     self.colorSchemeWrapper = GIDSignInButtonColorSchemeWrapper(wrapped: colorScheme)
     self.stateWrapper = GIDSignInButtonStateWrapper(wrapped: state)
     self.action = action
-    self.icon = UIImageView()
   }
 
   public var body: some View {
@@ -87,10 +85,19 @@ public struct GIDSwiftUISignInButton: View {
         .disabled(self.state == GIDSignInButtonState.disabled)
         .buttonStyle(IconConfiguration())
     case .standard:
-      Button(title, action: self.action)
-        .cornerRadius(CGFloat(kCornerRadius))
-        .disabled(self.state == GIDSignInButtonState.disabled)
-        .buttonStyle(StandardConfiguration())
+    Button(action: action) {
+      HStack {
+        #warning("Do not force unwrap the image")
+        Image(uiImage: iconImage()!)
+        Text(title)
+      }
+      .padding(10)
+      .overlay(RoundedRectangle(cornerRadius: CGFloat(kCornerRadius)))
+    }
+    .disabled(state == .disabled)
+    .cornerRadius(CGFloat(kCornerRadius))
+    .disabled(state == .disabled)
+    .buttonStyle(StandardConfiguration())
     case .wide:
       Button(title, action: self.action)
         .cornerRadius(CGFloat(kCornerRadius))
@@ -101,20 +108,22 @@ public struct GIDSwiftUISignInButton: View {
     }
   }
 
-  private func loadIconImage() {
+  private func iconImage() -> UIImage? {
     guard let bundle = Bundle.gidFrameworkPath(), let path = bundle.path(
       forResource: googleImageName,
       ofType: "png") else {
-        return
+        return nil
       }
     let image = UIImage(contentsOfFile: path)
 
     switch state {
     case .disabled:
-      // Create a blurred image instead
-      icon.image = image
+      return image?.imageWithBlendMode(
+        .multiply,
+        color: .init(white: 0, alpha: kDisabledIconAlpha)
+      )
     default:
-      icon.image = image
+      return image
     }
   }
 }
