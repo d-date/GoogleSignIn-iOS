@@ -18,10 +18,54 @@ import SwiftUI
 import GoogleSignIn
 import CoreGraphics
 
+@available(iOS 13.0, *)
+fileprivate struct Width {
+  let min, max: CGFloat
+}
+
+@available(iOS 13.0, *)
+extension GIDSignInButtonStyle {
+  fileprivate var width: Width {
+    switch self {
+    case .wide: return Width(min: CGFloat(kIconWidth), max: CGFloat(kIconWidth))
+    case .standard: return Width(min: 90, max: .infinity)
+    case .iconOnly: return Width(min: 170, max: .infinity)
+    default:
+      fatalError("Unrecognized case for `GIDSignInButtonStyle: \(self)")
+    }
+  }
+
+  fileprivate var buttonText: String {
+    switch self {
+    case .wide: return "Sign in with Google"
+    case .standard: return "Sign in"
+    case .iconOnly: return ""
+    default:
+      fatalError("Unrecognized case for `GIDSignInButtonStyle: \(self)")
+    }
+  }
+}
+
+@available(iOS 13.0, *)
+struct SwiftUIButtonStyle: ButtonStyle {
+  let style: GIDSignInButtonStyle
+
+  func makeBody(configuration: Configuration) -> some View {
+    configuration.label
+      .frame(minWidth: style.width.min,
+             maxWidth: style.width.max,
+             minHeight: CGFloat(kButtonHeight),
+             maxHeight: CGFloat(kButtonHeight))
+      .foregroundColor(.blue)
+      .background(Color.white)
+      .cornerRadius(5)
+      .shadow(color: .gray, radius: 2, x: 0, y: 2)
+  }
+}
+
 /// A Google Sign In button to be used in SwiftUI.
 @available(iOS 13.0, *)
 public struct GIDSwiftUISignInButton: View {
-  private let title = "Sign In with Google"
   private let googleImageName = "google"
   private let action: () -> Void
 
@@ -78,34 +122,23 @@ public struct GIDSwiftUISignInButton: View {
   }
 
   public var body: some View {
-    switch style {
-    case .iconOnly:
-      Button(title, action: self.action)
-        .cornerRadius(CGFloat(kCornerRadius))
-        .disabled(self.state == GIDSignInButtonState.disabled)
-        .buttonStyle(IconConfiguration())
-    case .standard:
     Button(action: action) {
-      HStack {
-        #warning("Do not force unwrap the image")
-        Image(uiImage: iconImage()!)
-        Text(title)
+      switch style {
+      case .iconOnly:
+        Image("google", bundle: Bundle.gidFrameworkPath())
+      case .standard, .wide:
+        HStack {
+          Image("google", bundle: Bundle.gidFrameworkPath())
+            .padding(.leading, 8)
+          Text(style.buttonText)
+            .padding(.trailing, 8)
+          Spacer()
+        }
+      default:
+        fatalError("Unrecognized case for `GIDSignInButtonStyle: \(self)")
       }
-      .padding(10)
-      .overlay(RoundedRectangle(cornerRadius: CGFloat(kCornerRadius)))
     }
-    .disabled(state == .disabled)
-    .cornerRadius(CGFloat(kCornerRadius))
-    .disabled(state == .disabled)
-    .buttonStyle(StandardConfiguration())
-    case .wide:
-      Button(title, action: self.action)
-        .cornerRadius(CGFloat(kCornerRadius))
-        .disabled(self.state == GIDSignInButtonState.disabled)
-        .buttonStyle(WideConfiguration())
-    default:
-      fatalError("Unknown case provided for `GIDSignInButtonStyle`.")
-    }
+    .buttonStyle(SwiftUIButtonStyle(style: style))
   }
 
   private func iconImage() -> UIImage? {
@@ -125,30 +158,6 @@ public struct GIDSwiftUISignInButton: View {
     default:
       return image
     }
-  }
-}
-
-@available(iOS 13.0, *)
-private struct IconConfiguration: ButtonStyle {
-  func makeBody(configuration: Configuration) -> some View {
-    configuration.label
-      .padding()
-  }
-}
-
-@available(iOS 13.0, *)
-private struct StandardConfiguration: ButtonStyle {
-  func makeBody(configuration: Configuration) -> some View {
-    configuration.label
-      .padding()
-  }
-}
-
-@available(iOS 13.0, *)
-private struct WideConfiguration: ButtonStyle {
-  func makeBody(configuration: Configuration) -> some View {
-    configuration.label
-      .padding()
   }
 }
 
