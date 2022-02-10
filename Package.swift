@@ -91,10 +91,10 @@ let package = Package(
       dependencies: [
         "GoogleSignIn"
       ],
-      path: "GoogleSignIn/Swift_Sources",
-      linkerSettings: [
-        .linkedLibrary("SwiftUI")
-      ]
+      path: "GoogleSignIn/Swift_Sources"
+//      linkerSettings: [
+//        .linkedLibrary("SwiftUI")
+//      ]
     ),
     .testTarget(
       name: "GoogleSignIn-UnitTests",

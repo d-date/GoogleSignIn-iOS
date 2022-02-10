@@ -15,7 +15,7 @@
  */
 
 import SwiftUI
-import GoogleSignIn
+import GoogleSignIn_Swift
 
 struct SignInView: View {
   @EnvironmentObject var viewModel: AuthenticationViewModel
