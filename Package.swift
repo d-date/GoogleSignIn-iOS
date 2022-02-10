@@ -28,6 +28,11 @@ let package = Package(
       name: "GoogleSignIn",
       targets: [
         "GoogleSignIn",
+      ]
+    ),
+    .library(
+      name: "GoogleSignIn_Swift",
+      targets: [
         "GoogleSignIn_Swift",
       ]
     ),

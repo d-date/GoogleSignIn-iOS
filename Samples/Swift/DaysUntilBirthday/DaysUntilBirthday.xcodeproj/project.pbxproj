@@ -18,11 +18,11 @@
 		7345AD212703D9C30020AFB1 /* GoogleSignInAuthenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7345AD172703D9C30020AFB1 /* GoogleSignInAuthenticator.swift */; };
 		7345AD232703D9C30020AFB1 /* UserProfileImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7345AD192703D9C30020AFB1 /* UserProfileImageLoader.swift */; };
 		7345AD242703D9C30020AFB1 /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7345AD1A2703D9C30020AFB1 /* UserProfileView.swift */; };
-		7345AD272703DA3E0020AFB1 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 7345AD262703DA3E0020AFB1 /* GoogleSignIn */; };
 		736F49BA270E05E200580053 /* BirthdayLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736F49B9270E05E200580053 /* BirthdayLoader.swift */; };
 		736F49BC270E102C00580053 /* BirthdayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736F49BB270E102C00580053 /* BirthdayViewModel.swift */; };
 		739FCC46270E467600C92042 /* BirthdayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739FCC45270E467600C92042 /* BirthdayView.swift */; };
 		739FCC48270E659A00C92042 /* Birthday.swift in Sources */ = {isa = PBXBuildFile; fileRef = 739FCC47270E659A00C92042 /* Birthday.swift */; };
+		73AA1A0627B49C3C00EBFC3B /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 73AA1A0527B49C3C00EBFC3B /* GoogleSignIn */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,7 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7345AD272703DA3E0020AFB1 /* GoogleSignIn in Frameworks */,
+				73AA1A0627B49C3C00EBFC3B /* GoogleSignIn in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,7 +121,7 @@
 			);
 			name = DaysUntilBirthday;
 			packageProductDependencies = (
-				7345AD262703DA3E0020AFB1 /* GoogleSignIn */,
+				73AA1A0527B49C3C00EBFC3B /* GoogleSignIn */,
 			);
 			productName = "GSI-Swift-Sample";
 			productReference = 7345ACFF2703D9470020AFB1 /* DaysUntilBirthday.app */;
@@ -151,7 +151,7 @@
 			);
 			mainGroup = 7345ACF62703D9470020AFB1;
 			packageReferences = (
-				7345AD252703DA3E0020AFB1 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				73AA1A0427B49C3C00EBFC3B /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			productRefGroup = 7345AD002703D9470020AFB1 /* Products */;
 			projectDirPath = "";
@@ -384,20 +384,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		7345AD252703DA3E0020AFB1 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+		73AA1A0427B49C3C00EBFC3B /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/google/GoogleSignIn-iOS.git";
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 6.0.2;
+				branch = "mdmathias/swiftui-button";
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		7345AD262703DA3E0020AFB1 /* GoogleSignIn */ = {
+		73AA1A0527B49C3C00EBFC3B /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 7345AD252703DA3E0020AFB1 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			package = 73AA1A0427B49C3C00EBFC3B /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignIn;
 		};
 /* End XCSwiftPackageProductDependency section */
